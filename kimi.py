@@ -56,7 +56,31 @@ def parse(tokens):
      }
 
     '''
+    if len(tokens) == 0:
+        raise SyntaxError("Nothing to parse!")
+    first = tokens.pop(0)
+    if first == ')':
+        raise SyntaxError("Unexpected ')'!")
+    elif first == '(':
+        #TODO recursively parse the rest of tokens
+    else:
+        return parse_atom(first)
+
+def parse_atom(token):
+    '''Takes an atomic expression and returns the expression as a dictionary.
+
+    >>> parse_atom("2")
+    {'type': 'literal', 'value': 1}
+
+    >>> parse_atom("some string")
+    {'type': 'literal', 'value': 'some string'}
+
+    >>> parse_atom("+")
+    {'type': 'symbol', 'name': '+'}
+    '''
+    # How is this going to know the difference between strings and symbols?
     pass
+
 
 def evaluate(expression, environment):
     '''Take an expression and environment as dictionaries.

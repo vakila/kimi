@@ -4,7 +4,7 @@
 
 import sys
 
-def tokenize(program):
+def tokenize(string):
     '''Take a Kimi program as a string, return the tokenized program as a list of strings.
 
     >>> tokenize("(+ 1 2)")
@@ -13,9 +13,9 @@ def tokenize(program):
     >>> tokenize("(define square (lambda x (* x x)))")
     ['(', 'define', 'square', '(', 'lambda', 'x', '(', '*', 'x', 'x', ')', ')', ')']
     '''
-    program = program.replace("(", " ( ")
-    program = program.replace(")", " ) ")
-    tokens = program.split()
+    string = string.replace("(", " ( ")
+    string = string.replace(")", " ) ")
+    tokens = string.split()
     return tokens
 
 def parse(tokens):

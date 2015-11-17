@@ -16,9 +16,25 @@ def tokenize(string):
     >>> tokenize("(define square (lambda x (* x x)))")
     ['(', 'define', 'square', '(', 'lambda', 'x', '(', '*', 'x', 'x', ')', ')', ')']
     '''
-    string = string.replace("(", " ( ")
-    string = string.replace(")", " ) ")
-    tokens = string.split()
+    string = string.replace("(", " ( ").replace(")", " ) ")
+    tokens = []
+    remaining = string.strip()
+    token = ""
+    while remaining:
+        next_char = remaining[0]
+        if next_char in ["(", ")"]:
+            # the token is this character
+            token = next_char
+            remaining = remaining[1:].strip()
+        elif next_char == '"':
+            # the token is everything until the next "
+            endquote_index = remaining[1:].find('"') + 2
+            token = remaining[0:endquote_index]
+            remaining = remaining[endquote_index:].strip()
+        else:
+            # the token is everything until the next whitespace
+            [token, remaining] = remaining.split(None, 1)
+        tokens.append(token)
     return tokens
 
 def parse(tokens):

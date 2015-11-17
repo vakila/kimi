@@ -12,6 +12,11 @@ or
 ## Running tests using doctest
     $ python3 -m doctest -v kimi.py
 
+## Basic types
+* Numbers are limited to integers (e.g. `1`, `43905302`)
+* Strings must be wrapped in double quotes (e.g. `"my string"`). Escaped double quotes are not supported, but single quotes can be used (e.g. `"my \"quote\" string"` is not a valid string, but `"my 'quote' string"` is). Note that providing a program directly as a string on the command line may give you headaches with this.
+* Booleans are `true` and `false`
+
 ## Planned features
 * `lambda`
 * Built-in functions

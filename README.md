@@ -17,10 +17,11 @@ or
 * Built-in functions
     * Arithmetic: `+`, `-`, `*`, `/`, `%`
     * Logic: `!`, `&`, `|`
-    * Comparison: `=`, `>`, `<`, (optionally `>=`, `<=`)
+    * Comparison: `=`, `>`, `<`, `>=`, `<=`
+    * Strings: `concat`, `find`, `replace`, `substring`...?
 * Function application
 * Variable definition (names)
 * Conditionals
-* Lists
+* Lists (`empty`, `cons`, `first`, `rest`)
 
 ## Stay tuned!

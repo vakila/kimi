@@ -23,7 +23,7 @@ def tokenize(string):
     special = ['(',')','"']
     whitespaces = [' ','\n','\t']
     tokens = []
-    remaining = string#.strip()
+    remaining = string
     while remaining:
         this_char = remaining[0]
         if this_char in whitespaces:
@@ -36,7 +36,7 @@ def tokenize(string):
             if this_char == ")":
                 token_type = 'closing'
             token_value = None
-            remaining = remaining[1:]#.strip()
+            remaining = remaining[1:]
         elif this_char == '"':
             # the token is everything until the next "
             endquote_index = remaining[1:].find('"')
@@ -45,9 +45,9 @@ def tokenize(string):
             endquote_index += 1
             token_value = remaining[1:endquote_index]
             token_type = 'literal'
-            remaining = remaining[endquote_index+1:]#.strip()
+            remaining = remaining[endquote_index+1:]
         else:
-            # the token is everything until the next whitespace
+            # the token is everything until the next whitespace or special character
             token_value = ""
             is_number = True
             while this_char not in special and this_char not in whitespaces:

@@ -10,6 +10,9 @@ def tokenize(string):
     >>> tokenize("(+ 1 2)")
     ['(', '+', '1', '2', ')']
 
+    >>> tokenize('(define x "some string")')
+    ['(', 'define', 'x', '"some string"', ')']
+
     >>> tokenize("(define square (lambda x (* x x)))")
     ['(', 'define', 'square', '(', 'lambda', 'x', '(', '*', 'x', 'x', ')', ')', ')']
     '''
@@ -63,19 +66,20 @@ def parse(tokens):
         raise SyntaxError("Unexpected ')'!")
     elif first == '(':
         #TODO recursively parse the rest of tokens
+        pass
     else:
         return parse_atom(first)
 
 def parse_atom(token):
     '''Takes an atomic expression and returns the expression as a dictionary.
 
-    >>> parse_atom("2")
+    >>> parse_atom('2')
     {'type': 'literal', 'value': 1}
 
-    >>> parse_atom("some string")
+    >>> parse_atom('"some string"')
     {'type': 'literal', 'value': 'some string'}
 
-    >>> parse_atom("+")
+    >>> parse_atom('+')
     {'type': 'symbol', 'name': '+'}
     '''
     # How is this going to know the difference between strings and symbols?

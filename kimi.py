@@ -7,6 +7,9 @@ import sys
 def tokenize(string):
     '''Take a program as a string, return the tokenized program as a list of strings.
 
+    >>> tokenize("-1")
+    [('literal', -1)]
+
     >>> tokenize("(+ 1 2)")
     [('opening', None), ('symbol', '+'), ('literal', 1), ('literal', 2), ('closing', None)]
 
@@ -51,13 +54,13 @@ def tokenize(string):
             token_value = ""
             is_number = True
             while this_char not in special and this_char not in whitespaces:
-                if not this_char.isdigit():
+                if not (this_char.isdigit() or this_char == '-'):
                     is_number = False
                 token_value += this_char
                 remaining = remaining[1:]
-                this_char = remaining[0]
-                if not this_char:
+                if not remaining:
                     break
+                this_char = remaining[0]
             if is_number:
                 token_type = "literal"
                 token_value = int(token_value)

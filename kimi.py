@@ -120,4 +120,7 @@ def execute(program):
 
 if __name__ == "__main__":
     program = sys.argv[1]
+    if program.endswith('.kimi'):
+        with open(program, 'r') as f:
+            program = f.read()
     print(tokenize(program))

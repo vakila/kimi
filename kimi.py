@@ -14,6 +14,9 @@ def tokenize(string):
     >>> tokenize("(+ 1 2)")
     [('opening', None), ('symbol', '+'), ('literal', 1), ('literal', 2), ('closing', None)]
 
+    >>> tokenize("(- 2 4)")
+    [('opening', None), ('symbol', '-'), ('literal', 2), ('literal', 4), ('closing', None)]
+
     >>> tokenize('(define x "some string")')
     [('opening', None), ('symbol', 'define'), ('symbol', 'x'), ('literal', 'some string'), ('closing', None)]
 
@@ -53,19 +56,18 @@ def tokenize(string):
         else:
             # the token is everything until the next whitespace or special character
             token_value = ""
-            is_number = True
             while this_char not in special and this_char not in whitespaces:
-                if not (this_char.isdigit() or this_char == '-'):
-                    is_number = False
                 token_value += this_char
                 remaining = remaining[1:]
                 if not remaining:
                     break
                 this_char = remaining[0]
-            if is_number:
-                token_type = "literal"
+            try:
+                # anything that can be converted to int is a literal number
                 token_value = int(token_value)
-            else:
+                token_type = "literal"
+            except ValueError:
+                # everything else is a symbol
                 token_type = "symbol"
         tokens.append((token_type, token_value))
     return tokens
@@ -123,7 +125,7 @@ def evaluate(expression, environment):
     >>> evaluate(parse(tokenize("(+ 1 2)")), standard_env())
     3
     '''
-    #TODO need test case with local environment(s) 
+    #TODO need test case with local environment(s)
 
     expr_type = expression['type']
     if expr_type == 'literal':
@@ -144,7 +146,7 @@ def evaluate(expression, environment):
 def execute(program):
     '''Take a Kimi program as a string. Tokenize the program, parse the tokens into a tree,
     then evaluate the tree. Return the result, or an error message.'''
-    return evaluate(parse(tokenize(program)))
+    return evaluate(parse(tokenize(program)), standard_env())
 
 
 if __name__ == "__main__":
@@ -152,4 +154,6 @@ if __name__ == "__main__":
     if program.endswith('.kimi'):
         with open(program, 'r') as f:
             program = f.read()
-    print(tokenize(program))
+        print("Evaluating program:")
+        print(program)
+    print(execute(program))

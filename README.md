@@ -9,23 +9,39 @@ Run a program from a `.kimi` file:
 
     $ python3 kimi.py my_program.kimi
 
-or type a program as a string on the command line:
+or type a program as a string on the command line (this may give you headaches)
 
     $ python3 kimi.py "(+ 1 2)"
 
 ## Running tests using doctest
     $ python3 -m doctest -v kimi.py
 
-## Basic types
-* Numbers are limited to integers (e.g. `1`, `43905302`)
-* Strings must be wrapped in double quotes (e.g. `"my string"`). Escaped double quotes are not supported, but single quotes can be used (e.g. `"my \"quote\" string"` is not a valid string, but `"my 'quote' string"` is). Note that providing a program directly as a string on the command line may give you headaches with this.
-* Booleans are `true` and `false`
+## Basics
+* **Parentheses** are used to signal function calls, just like other lispy languages. Parentheses are not used for grouping, or any other purpose. For example, `(+ 1 2)` is a valid Kimi program, and `(+ (1) (2))` is not.
+* **Numbers** are limited to integers (e.g. `1`, `-439`). Kimi assumes that anything that __can__ be interpreted as an integer __is__ an integer; for example, `2`, `+2` and `2.343523` all become `2`, and `-2` and `-2.422` become `-2`.
+* **Strings** must be wrapped in double quotes (e.g. `"my string"`). Kimi assumes anything surrounded by double quotes is a string. Escaped double quotes are not supported, but single quotes can be used (e.g. `"my \"quote\" string"` is not a valid string, but `"my 'quote' string"` is). Note that providing a program directly as a string on the command line may give you headaches with this.
+* **Booleans** are `true` and `false`
+* Anything in your program that is not one of the above is considered a **symbol**.
+
+## Names and scope
+* Names can be assigned like so: `(define x 5)`.
+* Any symbol (see above) is a valid name, as long as it does not already exist. For example, `x`, `123abc123`, `--thing--` are valid names, but `define`, `-`, and `first` are not, since they already exist as built-in functions (see below).
+
+## Built-in functions
+* Arithmetic:
+    * `+` (addition): `(+ 1 2) => 3`
+    * `-` (subtraction): `(- 2 1) => 1`
+    * `*` (multiplication): `(* 2 4) => 8`
+    * `/` (floor division, as we have only integers): `(/ 6 2) => 3`, `(/ 7 2) => 3`
+    * `%` (modulo): `(% 7 2) => 1`
+* Logic:
+    * `!` (not)
+    * `&` (and)
+    * `|` (inclusive or)
 
 ## Planned features
 * `lambda`
 * Built-in functions
-    * Arithmetic: `+`, `-`, `*`, `/`, `%`
-    * Logic: `!`, `&`, `|`
     * Comparison: `=`, `>`, `<`, `>=`, `<=`
     * Strings: `concat`, `find`, `replace`, `substring`...?
 * Function application

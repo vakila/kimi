@@ -8,33 +8,63 @@ def tokenize(string):
     '''Take a program as a string, return the tokenized program as a list of strings.
 
     >>> tokenize("(+ 1 2)")
-    ['(', '+', '1', '2', ')']
+    [('opening', None), ('symbol', '+'), ('literal', 1), ('literal', 2), ('closing', None)]
 
     >>> tokenize('(define x "some string")')
-    ['(', 'define', 'x', '"some string"', ')']
+    [('opening', None), ('symbol', 'define'), ('symbol', 'x'), ('literal', 'some string'), ('closing', None)]
+
+    >>> tokenize('(define x "some (string)")')
+    [('opening', None), ('symbol', 'define'), ('symbol', 'x'), ('literal', 'some (string)'), ('closing', None)]
 
     >>> tokenize("(define square (lambda x (* x x)))")
-    ['(', 'define', 'square', '(', 'lambda', 'x', '(', '*', 'x', 'x', ')', ')', ')']
+    [('opening', None), ('symbol', 'define'), ('symbol', 'square'), ('opening', None), ('symbol', 'lambda'), ('symbol', 'x'), ('opening', None), ('symbol', '*'), ('symbol', 'x'), ('symbol', 'x'), ('closing', None), ('closing', None), ('closing', None)]
+
     '''
-    string = string.replace("(", " ( ").replace(")", " ) ")
+
+    special = ['(',')','"']
+    whitespaces = [' ','\n','\t']
     tokens = []
-    remaining = string.strip()
-    token = ""
+    remaining = string#.strip()
     while remaining:
-        next_char = remaining[0]
-        if next_char in ["(", ")"]:
+        this_char = remaining[0]
+        if this_char in whitespaces:
+            remaining = remaining[1:]
+            continue
+        if this_char in ["(", ")"]:
             # the token is this character
-            token = next_char
-            remaining = remaining[1:].strip()
-        elif next_char == '"':
+            if this_char == "(":
+                token_type = 'opening'
+            if this_char == ")":
+                token_type = 'closing'
+            token_value = None
+            remaining = remaining[1:]#.strip()
+        elif this_char == '"':
             # the token is everything until the next "
-            endquote_index = remaining[1:].find('"') + 2
-            token = remaining[0:endquote_index]
-            remaining = remaining[endquote_index:].strip()
+            endquote_index = remaining[1:].find('"')
+            if endquote_index == -1:
+                raise SyntaxError("Error in string syntax!")
+            endquote_index += 1
+            token_value = remaining[1:endquote_index]
+            token_type = 'literal'
+            remaining = remaining[endquote_index+1:]#.strip()
         else:
             # the token is everything until the next whitespace
-            [token, remaining] = remaining.split(None, 1)
-        tokens.append(token)
+            token_value = ""
+            is_number = True
+            while this_char not in special and this_char not in whitespaces:
+                if not this_char.isdigit():
+                    is_number = False
+                token_value += this_char
+                remaining = remaining[1:]
+                this_char = remaining[0]
+                if not this_char:
+                    break
+            if is_number:
+                token_type = "literal"
+                token_value = int(token_value)
+            else:
+                token_type = "symbol"
+        tokens.append((token_type, token_value))
     return tokens
 
 def parse(tokens):
@@ -98,8 +128,18 @@ def parse_atom(token):
     >>> parse_atom('+')
     {'type': 'symbol', 'name': '+'}
     '''
-    # How is this going to know the difference between strings and symbols?
-    pass
+    token_type = 'literal'
+    try:
+        value = int(token)
+    except:
+        if '"' in token:
+            # this lexical processing should be in the tokenizer
+            if token.startswith('"') and token.endswith('"'):
+                value = token.strip('"')
+            else:
+                raise SyntaxError("Incorrect string syntax:", token)
+        else:
+            token_type = 'symbol'
 
 
 def evaluate(expression, environment):

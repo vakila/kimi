@@ -5,9 +5,13 @@ and its interpreter in Python 3.
 Created by [Anjana](https://github.com/vakila) at the [Recurse Center](https://www.recurse.com).
 
 ## Running programs
-    $ python3 kimi.py "(+ 1 2)"
-or
+Run a program from a `.kimi` file:
+
     $ python3 kimi.py my_program.kimi
+
+or type a program as a string on the command line:
+
+    $ python3 kimi.py "(+ 1 2)"
 
 ## Running tests using doctest
     $ python3 -m doctest -v kimi.py

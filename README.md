@@ -18,7 +18,7 @@ or type a program as a string on the command line (this may give you headaches)
 
 ## Basics
 * **Parentheses** are used to signal function calls, just like other lispy languages. Parentheses are not used for grouping, or any other purpose. For example, `(+ 1 2)` is a valid Kimi program, and `(+ (1) (2))` is not.
-* **Numbers** are limited to integers (e.g. `1`, `-439`). Kimi assumes that anything that __can__ be interpreted as an integer __is__ an integer; for example, `2`, `+2` and `2.343523` all become `2`, and `-2` and `-2.422` become `-2`.
+* **Numbers** are limited to integers (e.g. `1`, `-439`). Kimi assumes that anything that *can* be interpreted as an integer *is* an integer; for example, `2`, `+2` and `2.343523` all become `2`, and `-2` and `-2.422` become `-2`.
 * **Strings** must be wrapped in double quotes (e.g. `"my string"`). Kimi assumes anything surrounded by double quotes is a string. Escaped double quotes are not supported, but single quotes can be used (e.g. `"my \"quote\" string"` is not a valid string, but `"my 'quote' string"` is). Note that providing a program directly as a string on the command line may give you headaches with this.
 * **Booleans** are `true` and `false`
 * Anything in your program that is not one of the above is considered a **symbol**.

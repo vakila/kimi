@@ -3,6 +3,7 @@
 # http://www.github.com/vakila/kimi
 
 import sys
+from environment import standard_env
 
 def tokenize(string):
     '''Take a program as a string, return the tokenized program as a list of strings.
@@ -112,8 +113,33 @@ def parse(tokens):
 def evaluate(expression, environment):
     '''Take an expression and environment as dictionaries.
     Evaluate the expression in the context of the environment, and return the result.
+
+    >>> evaluate(parse(tokenize("-10")), standard_env())
+    -10
+
+    >>> evaluate(parse(tokenize("true")), standard_env())
+    True
+
+    >>> evaluate(parse(tokenize("(+ 1 2)")), standard_env())
+    3
     '''
-    pass
+    #TODO need test case with local environment(s) 
+
+    expr_type = expression['type']
+    if expr_type == 'literal':
+        return expression['value']
+    elif expr_type == 'symbol':
+        symbol = expression['value']
+        if symbol in environment:
+            return environment[symbol]
+        else:
+            raise NameError(symbol + " is not defined in the current environment.")
+            #TODO can we give more information about which environment we're in?
+    elif expr_type == 'apply':
+        fn = evaluate(expression['operator'], environment)
+        return fn(*[evaluate(arg, environment) for arg in expression['arguments']])
+    else:
+        raise TypeError("Unsupported expression type! " + str(expression))
 
 def execute(program):
     '''Take a Kimi program as a string. Tokenize the program, parse the tokens into a tree,

@@ -21,6 +21,8 @@ def standard_env():
 
 
 def add_booleans(env):
+    env['true'] = True
+    env['false'] = False
     return env
 
 def add_arithmentic(env):

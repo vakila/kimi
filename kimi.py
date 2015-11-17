@@ -20,7 +20,6 @@ def tokenize(string):
     [('opening', None), ('symbol', 'define'), ('symbol', 'square'), ('opening', None), ('symbol', 'lambda'), ('symbol', 'x'), ('opening', None), ('symbol', '*'), ('symbol', 'x'), ('symbol', 'x'), ('closing', None), ('closing', None), ('closing', None)]
 
     '''
-
     special = ['(',')','"']
     whitespaces = [' ','\n','\t']
     tokens = []
@@ -78,68 +77,33 @@ def parse(tokens):
         - type 'symbol' (variable or operator) has key 'name' (value: string representing the variable/operator)
         - type 'literal' (number, string, boolean, ...) has key 'value' (value: the literal)
 
-    >>> parse(['(', '+', '1', '2', ')'])
-    {'type': 'apply',
-     'operator': {'type': 'symbol', 'name': '+'},
-     'arguments': ({'type': 'literal', 'value': 1},
-                   {'type': 'literal', 'value': 2}
-                   )
-     }
+    >>> parse(tokenize("(+ 1 2)"))
+    {'operator': {'type': 'symbol', 'value': '+'}, 'type': 'apply', 'arguments': ({'type': 'literal', 'value': 1}, {'type': 'literal', 'value': 2})}
 
-    >>> parse(['(', 'define', 'square', '(', 'lambda', 'x', '(', '*', 'x', 'x', ')', ')', ')'])
-    {'type': 'apply',
-     'operator': {'type': 'symbol', 'name': 'define'},
-     'arguments': ({'type': 'symbol', 'name': 'square'},
-                   {'type': 'apply',
-                    'operator': {'type': 'symbol', 'name': 'lambda'},
-                    'arguments': ({'type': 'symbol', 'name': 'x'},
-                                  {'type': 'apply',
-                                   'operator': {'type': 'symbol', 'name': '*'},
-                                   'arguments': ({'type': 'symbol', 'name': 'x'},
-                                                 {'type': 'symbol', 'name': 'x'}
-                                                 )
-                                    }
-                                  )
-                    }
-                   )
-     }
+    >>> parse(tokenize("(define square (lambda x (* x x)))"))
+    {'operator': {'type': 'symbol', 'value': 'define'}, 'type': 'apply', 'arguments': ({'type': 'symbol', 'value': 'square'}, {'operator': {'type': 'symbol', 'value': 'lambda'}, 'type': 'apply', 'arguments': ({'type': 'symbol', 'value': 'x'}, {'operator': {'type': 'symbol', 'value': '*'}, 'type': 'apply', 'arguments': ({'type': 'symbol', 'value': 'x'}, {'type': 'symbol', 'value': 'x'})})})}
 
     '''
     if len(tokens) == 0:
         raise SyntaxError("Nothing to parse!")
-    first = tokens.pop(0)
-    if first == ')':
+    (token_type, token_value) = tokens.pop(0)
+    if token_type == 'closing':
         raise SyntaxError("Unexpected ')'!")
-    elif first == '(':
-        #TODO recursively parse the rest of tokens
-        pass
+    elif token_type == 'opening':
+        operator = parse(tokens)
+        arguments = []
+        while True:
+            if not tokens:
+                raise SyntaxError("Unexpected end of program!")
+            next_token = tokens[0]
+            if next_token[0] == 'closing':
+                tokens.pop(0)
+                break
+            arguments.append(parse(tokens))
+        arguments = tuple(arguments)
+        return {'type': 'apply', 'operator': operator, 'arguments': arguments}
     else:
-        return parse_atom(first)
-
-def parse_atom(token):
-    '''Takes an atomic expression and returns the expression as a dictionary.
-
-    >>> parse_atom('2')
-    {'type': 'literal', 'value': 1}
-
-    >>> parse_atom('"some string"')
-    {'type': 'literal', 'value': 'some string'}
-
-    >>> parse_atom('+')
-    {'type': 'symbol', 'name': '+'}
-    '''
-    token_type = 'literal'
-    try:
-        value = int(token)
-    except:
-        if '"' in token:
-            # this lexical processing should be in the tokenizer
-            if token.startswith('"') and token.endswith('"'):
-                value = token.strip('"')
-            else:
-                raise SyntaxError("Incorrect string syntax:", token)
-        else:
-            token_type = 'symbol'
+        return {'type': token_type, 'value': token_value}
 
 
 def evaluate(expression, environment):

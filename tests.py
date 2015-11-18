@@ -77,6 +77,7 @@ class TestExecute(unittest.TestCase):
         self.assertEqual(execute("(| (& true false) (! true))"), False)
         self.assertEqual(execute("(+ (* 2 3) (- 4 2))"), 8)
 
+    @unittest.expectedFailure
     def test_bad_program(self):
         self.assertRaises(SystemExit, execute, ("(+ (1) (2))"))
         self.assertEqual(execute("(+ 1 2) (+ 3 4)"), 7) #or throw error
@@ -144,6 +145,15 @@ class TestBuiltins(unittest.TestCase):
         self.assertEqual(execute("(<= 2 1)"), False)
         self.assertEqual(execute("(<= 2 2)"), True)
         self.assertEqual(execute("(<= 1 2)"), True)
+
+class TestSpecialForms(unittest.TestCase):
+
+    def test_do(self):
+        self.assertEqual(execute("(do (> 4 3))"), True)
+        self.assertEqual(execute("(do (+ 1 2) (+ 3 4))"), 7)
+    #
+    # def test_define(self):
+    #     self.assertEqual(execute("(do (define x 1) (+ x x))"), 2)
 
 
 if __name__ == '__main__':

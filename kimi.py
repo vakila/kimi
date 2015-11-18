@@ -129,6 +129,7 @@ def evaluate(expression, environment):
             #TODO can we give more information about which environment we're in?
     elif expr_type == 'apply':
         fn = evaluate(expression['operator'], environment)
+        assert_or_complain(callable(fn), 'TYPE ERROR! Trying to call a non-function: ' + str(expression['operator']['value']) + '. Did you use parentheses correctly?')
         return fn(*[evaluate(arg, environment) for arg in expression['arguments']])
     else:
         complain_and_die("PARSING ERROR! Unexpected expression type: " + str(expression) + ".")

@@ -38,12 +38,14 @@ class TestTokenize(unittest.TestCase):
              ('opening', None), ('symbol', '*'), ('symbol', 'x'), ('symbol', 'x'),
              ('closing', None), ('closing', None), ('closing', None)])
 
-    def test_bad_program(self):
+    def test_syntax_errors(self):
         self.assertRaises(SystemExit, tokenize, ("( + 1 2 )"))
         self.assertRaises(SystemExit, tokenize, ("((+ 1 2))"))
-        self.assertEqual(tokenize("(+ 1 2) (+ 3 4)"),
-            [('opening', None), ('symbol', '+'), ('literal', 1), ('literal', 2), ('closing', None),
-             ('opening', None), ('symbol', '+'), ('literal', 3), ('literal', 4), ('closing', None)] )
+        self.assertRaises(SystemExit, tokenize, (")+ 1 2("))
+        self.assertRaises(SystemExit, tokenize, ("+ 1 2()"))
+        # self.assertEqual(tokenize("(+ 1 2) (+ 3 4)"),
+        #     [('opening', None), ('symbol', '+'), ('literal', 1), ('literal', 2), ('closing', None),
+        #      ('opening', None), ('symbol', '+'), ('literal', 3), ('literal', 4), ('closing', None)] )
 
 class TestParse(unittest.TestCase):
 

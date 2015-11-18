@@ -77,12 +77,14 @@ def parse(tokens):
                    {'type': 'literal', 'value': 2})}
 
     '''
+    print("tokens:", tokens)
     if len(tokens) == 0:
         raise SyntaxError("Nothing to parse!")
     (token_type, token_value) = tokens.pop(0)
     if token_type == 'closing':
         raise SyntaxError("Unexpected ')'!")
     elif token_type == 'opening':
+        print("OPENING")
         operator = parse(tokens)
         arguments = []
         while True:
@@ -90,7 +92,9 @@ def parse(tokens):
                 raise SyntaxError("Unexpected end of program!")
             next_token = tokens[0]
             if next_token[0] == 'closing':
+                print("CLOSING")
                 tokens.pop(0)
+                print("tokens:", tokens)
                 break
             arguments.append(parse(tokens))
         arguments = tuple(arguments)
@@ -131,10 +135,16 @@ def execute(program):
 
 
 if __name__ == "__main__":
-    program = sys.argv[1]
-    if program.endswith('.kimi'):
-        with open(program, 'r') as f:
-            program = f.read()
-        print("Evaluating program:")
-        print(program)
-    print(execute(program))
+    try:
+        program = sys.argv[1]
+    except:
+        print("Usage:")
+        print("$ python3 kimi.py my_program.kimi")
+        print('$ python3 kimi.py "(+ 1 2)"')
+    else:
+        if program.endswith('.kimi'):
+            with open(program, 'r') as f:
+                program = f.read()
+            print("Evaluating program:")
+            print(program)
+        print(execute(program))

@@ -5,10 +5,27 @@
 import operator as op
 from errors import *
 
+class Environment(dict):
+
+    def __init__(self, name = "global", outer = None, variables=(), values=()):
+        self.name = name
+        self.outer = outer
+        # if outer:
+        #     self.update(outer.items())
+        self.update(zip(variables, values))
+
+    def get(self, key):
+        if key in self:
+            return self[key]
+        elif self.outer == None:
+            throw_error("name", "Undefined variable: " + key)
+        else:
+            return self.outer.get(key)
+
 def standard_env():
     '''Returns the standard environment as a dictionary of (variable: value) pairs
     '''
-    env = dict()
+    env = Environment()
 
     add_booleans(env)
     add_arithmetic(env)

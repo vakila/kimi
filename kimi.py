@@ -3,7 +3,7 @@
 # http://www.github.com/vakila/kimi
 
 import sys
-from environment import standard_env
+from environment import Environment, standard_env
 from errors import *
 
 def tokenize(string):
@@ -155,11 +155,7 @@ def evaluate(expression, environment):
         return expression['value']
     elif expr_type == 'symbol':
         symbol = expression['value']
-        if symbol in environment:
-            return environment[symbol]
-        else:
-            complain_and_die("NAME ERROR! Undefined variable: " + symbol)
-            #TODO can we give more information about which environment we're in?
+        return environment.get(symbol)
     elif expr_type == 'apply':
         operator = expression['operator']
         if operator['type'] == 'symbol' and operator['value'] in SPECIALS:

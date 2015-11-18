@@ -20,7 +20,7 @@ or type a program as a string on the command line (this may give you headaches)
 * **Booleans** are `true` and `false` (based on Python's `True` and `False`).
 * Anything in your program that is not one of the above is considered a **symbol**.
 
-## Names and scope
+## Names
 * Names can be assigned like so: `(define x 5)`.
 * Any symbol (see above) is a valid name, as long as it does not already exist. For example, `x`, `123abc123`, and `--thing--` are valid names, but `define`, `-`, and `first` are not, since they already exist as built-in functions (see below).
 * Just because something *can* be used as a name doesn't mean it *should*; for example `2.5` and `-2-4` are valid names (see above), but not very good ones!
@@ -32,15 +32,26 @@ or type a program as a string on the command line (this may give you headaches)
     * `*` (multiplication): `(* 2 4) => 8`
     * `/` (floor division, as we have only integers): `(/ 6 2) => 3`, `(/ 7 2) => 3`
     * `%` (modulo): `(% 7 2) => 1`
+    * *These functions take only integer arguments*
 * Logic:
     * `!` (not): `(! true) => False`, `(! false) => True`
     * `&` (and): `(& true true) => True`, `(& true false) => False`
     * `|` (inclusive or): `(| true false) => True`, `(| false false) => False`
+    * *These functions take only boolean arguments*
+* Equality:
+    * `=`: `(= 1 1) => True`, `(= "yes" "yes") => True`, `(= true false) = False`
+    * *This function takes integer, string, or boolean arguments; arguments must be of the same type*
+    * Test for inequality using a combination of `!` and `=`, e.g. `(! (= 1 2)) => True`
+* Comparison:
+    * `>` (greater than): `(> 2 1) => True`
+    * `<` (less than): `(< 1 2) = True`
+    * `>=` (greater than or equal to): `(>= 2 2) => True`
+    * `<=` (less than or equal to): `(<= 3 2) = False`
+    * *These functions take only integer arguments*
 
 ## Planned features
 * `lambda`
 * Built-in functions
-    * Comparison: `=`, `!=`, `>`, `<`, `>=`, `<=`
     * Strings: `concat`, `find`, `replace`, `substring`...?
 * Function application
 * Variable definition (names)

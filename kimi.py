@@ -141,21 +141,6 @@ def special_forms():
 
 SPECIALS = special_forms()
 
-def get_special_if_exists(operator):
-    if operator['type'] == 'symbol':
-        name = operator['value']
-
-    elif operator['type'] == 'apply':
-        try:
-            name = operator['operator']['value']
-        except KeyError:
-            throw_error("operator", "I don't know what to do with this operator: " + str(operator))
-
-    if name in SPECIALS:
-        return SPECIALS[name]
-    else:
-        return None
-
 def evaluate(expression, environment):
     '''Take an expression and environment as dictionaries.
     Evaluate the expression in the context of the environment, and return the result.
@@ -177,9 +162,8 @@ def evaluate(expression, environment):
             #TODO can we give more information about which environment we're in?
     elif expr_type == 'apply':
         operator = expression['operator']
-        spec_form = get_special_if_exists(operator)
-        if spec_form:
-            return spec_form(expression['arguments'], environment)
+        if operator['type'] == 'symbol' and operator['value'] in SPECIALS:
+            return SPECIALS[operator['value']](expression['arguments'], environment)
         fn = evaluate(operator, environment)
         assert_or_throw(callable(fn), "type", 'Trying to call a non-function. Did you use parentheses correctly?')
         return fn(*[evaluate(arg, environment) for arg in expression['arguments']])

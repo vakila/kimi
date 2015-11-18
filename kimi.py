@@ -4,6 +4,7 @@
 
 import sys
 from environment import standard_env
+from errors import *
 
 def tokenize(string):
     '''Take a program as a string, return the tokenized program as a list of strings.
@@ -35,7 +36,7 @@ def tokenize(string):
             # the token is everything until the next "
             endquote_index = remaining[1:].find('"')
             if endquote_index == -1:
-                raise SyntaxError("Error in string syntax!")
+                complain_and_die("SYNTAX ERROR! Improper string syntax.")
             endquote_index += 1
             token_value = remaining[1:endquote_index]
             token_type = 'literal'
@@ -77,24 +78,24 @@ def parse(tokens):
                    {'type': 'literal', 'value': 2})}
 
     '''
-    print("tokens:", tokens)
+    # print("tokens:", tokens)
     if len(tokens) == 0:
-        raise SyntaxError("Nothing to parse!")
+        complain_and_die("SYNTAX ERROR! Nothing left to parse.")
     (token_type, token_value) = tokens.pop(0)
     if token_type == 'closing':
-        raise SyntaxError("Unexpected ')'!")
+        complain_and_die("SYNTAX ERROR! Unexpected ')'.")
     elif token_type == 'opening':
-        print("OPENING")
+        # print("OPENING")
         operator = parse(tokens)
         arguments = []
         while True:
             if not tokens:
-                raise SyntaxError("Unexpected end of program!")
+                complain_and_die("SYNTAX ERROR! Unexpected end of program.")
             next_token = tokens[0]
             if next_token[0] == 'closing':
-                print("CLOSING")
+                # print("CLOSING")
                 tokens.pop(0)
-                print("tokens:", tokens)
+                # print("tokens:", tokens)
                 break
             arguments.append(parse(tokens))
         arguments = tuple(arguments)
@@ -120,13 +121,13 @@ def evaluate(expression, environment):
         if symbol in environment:
             return environment[symbol]
         else:
-            raise NameError(symbol + " is not defined in the current environment.")
+            complain_and_die("NAME ERROR! Undefined variable: " + symbol)
             #TODO can we give more information about which environment we're in?
     elif expr_type == 'apply':
         fn = evaluate(expression['operator'], environment)
         return fn(*[evaluate(arg, environment) for arg in expression['arguments']])
     else:
-        raise TypeError("Unsupported expression type! " + str(expression))
+        complain_and_die("PARSING ERROR! Unexpected expression type: " + str(expression) + ".")
 
 def execute(program):
     '''Take a Kimi program as a string. Tokenize the program, parse the tokens into a tree,

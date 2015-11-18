@@ -3,21 +3,18 @@
 # http://www.github.com/vakila/kimi
 
 import operator as op
+from errors import *
 
 def standard_env():
     '''Returns the standard environment as a dictionary of (variable: value) pairs
     '''
     env = dict()
 
-    env = add_booleans(env)
-
-    env = add_arithmetic(env)
-
-    env = add_logic(env)
-
-    env = add_comparison(env)
-
-    env = add_strings(env)
+    add_booleans(env)
+    add_arithmetic(env)
+    add_logic(env)
+    add_comparison(env)
+    add_strings(env)
 
     return env
 
@@ -33,8 +30,8 @@ def verify_arg_type(fn, t):
     '''
     def verifier(*args):
         for arg in args:
-            if type(arg) != t:
-                raise TypeError("Invalid argument type! " + str(arg) + " is type " + type(arg).__name__ + ", expected type " + t.__name__ + ".")
+            assert_or_complain(type(arg) == t,
+                "TYPE ERROR! Invalid argument type: " + str(arg) + " is type " + type(arg).__name__ + ", expected type " + t.__name__ + ".")
         return fn(*args)
     return verifier
 

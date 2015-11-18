@@ -13,6 +13,7 @@ def standard_env():
     add_booleans(env)
     add_arithmetic(env)
     add_logic(env)
+    add_equality(env)
     add_comparison(env)
     add_strings(env)
 
@@ -53,10 +54,17 @@ def add_logic(env):
         env[symbol] = verify_arg_type(fn, bool)
     return env
 
+def add_equality(env):
+    def equals(a, b):
+        if type(a) != type(b):
+            return False
+        else:
+            return a == b
+    env["="] = equals
+    return env
+
 def add_comparison(env):
-    fns = [('=', op.eq),
-           ('!=', op.ne),
-           ('>', op.gt),
+    fns = [('>', op.gt),
            ('<', op.lt),
            ('>=', op.ge),
            ('<=', op.le)]

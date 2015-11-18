@@ -124,7 +124,7 @@ class TestBuiltins(unittest.TestCase):
         self.assertEqual(execute("(= 1 2)"), False)
         self.assertEqual(execute('(= "yes" "yes")'), True)
         self.assertEqual(execute('(= "yes" "no")'), False)
-        self.assertEqual(execute("(= false false)"), False)
+        self.assertEqual(execute("(= false false)"), True)
         self.assertEqual(execute("(= true false)"), False)
 
     def test_comparison(self):

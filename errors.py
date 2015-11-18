@@ -11,3 +11,9 @@ def assert_or_complain(assertion, message):
         assert assertion
     except AssertionError:
         complain_and_die(message)
+
+
+def throw_error(err_type, message):
+    error = err_type.upper() + " ERROR!"
+    print(error, message)
+    quit()

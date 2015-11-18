@@ -65,12 +65,23 @@ class TestParse(unittest.TestCase):
                                             'arguments': ({'type': 'symbol', 'value': 'x'},
                                                           {'type': 'symbol', 'value': 'x'})})})})
 
+
 class TestExecute(unittest.TestCase):
 
     def test_atoms(self):
         self.assertEqual(execute("-10"), -10)
         self.assertEqual(execute("true"), True)
         self.assertEqual(execute('"string"'), "string")
+
+    def test_nesting(self):
+        self.assertEqual(execute("(| (& true false) (! true))"), False)
+        self.assertEqual(execute("(+ (* 2 3) (- 4 2))"), 8)
+
+    def test_bad_program(self):
+        self.assertRaises(SystemExit, execute, ("(+ (1) (2))"))
+        self.assertEqual(execute("(+ 1 2) (+ 3 4)"), 7) #or throw error
+
+class TestBuiltins(unittest.TestCase):
 
     def test_arithmetic(self):
         # Addition
@@ -108,13 +119,31 @@ class TestExecute(unittest.TestCase):
         self.assertEqual(execute("(! true)"), False)
         self.assertEqual(execute("(! false)"), True)
 
-    def test_nesting(self):
-        self.assertEqual(execute("(| (& true false) (! true))"), False)
-        self.assertEqual(execute("(+ (* 2 3) (- 4 2))"), 8)
+    def test_equality(self):
+        self.assertEqual(execute("(= 1 1)"), True)
+        self.assertEqual(execute("(= 1 2)"), False)
+        self.assertEqual(execute('(= "yes" "yes")'), True)
+        self.assertEqual(execute('(= "yes" "no")'), False)
+        self.assertEqual(execute("(= false false)"), False)
+        self.assertEqual(execute("(= true false)"), False)
 
-    def test_bad_program(self):
-        self.assertRaises(SystemExit, execute, ("(+ (1) (2))"))
-        self.assertEqual(execute("(+ 1 2) (+ 3 4)"), 7) #or throw error
+    def test_comparison(self):
+        # Greater than
+        self.assertEqual(execute("(> 2 1)"), True)
+        self.assertEqual(execute("(> 2 2)"), False)
+        self.assertEqual(execute("(> 1 2)"), False)
+        # Less than
+        self.assertEqual(execute("(< 2 1)"), False)
+        self.assertEqual(execute("(< 2 2)"), False)
+        self.assertEqual(execute("(< 1 2)"), True)
+        # Greater or equal
+        self.assertEqual(execute("(>= 2 1)"), True)
+        self.assertEqual(execute("(>= 2 2)"), True)
+        self.assertEqual(execute("(>= 1 2)"), False)
+        # Less or equal
+        self.assertEqual(execute("(<= 2 1)"), False)
+        self.assertEqual(execute("(<= 2 2)"), True)
+        self.assertEqual(execute("(<= 1 2)"), True)
 
 
 if __name__ == '__main__':

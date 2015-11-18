@@ -58,16 +58,49 @@ class TestParse(unittest.TestCase):
                                             'arguments': ({'type': 'symbol', 'value': 'x'},
                                                           {'type': 'symbol', 'value': 'x'})})})})
 
-class TestEvaluate(unittest.TestCase):
+class TestExecute(unittest.TestCase):
 
-    def test_literals(self):
-        pass
+    def test_atoms(self):
+        self.assertEqual(execute("-10"), -10)
+        self.assertEqual(execute("true"), True)
+        self.assertEqual(execute('"string"'), "string")
 
     def test_arithmetic(self):
-        pass
+        # Addition
+        self.assertEqual(execute("(+ 1 2)"), 3)
+        self.assertEqual(execute("(+ -1 2)"), 1)
+        # Subtraction
+        self.assertEqual(execute("(- 2 1)"), 1)
+        self.assertEqual(execute("(- 1 -2)"), 3)
+        # Multiplication
+        self.assertEqual(execute("(* 2 4)"), 8)
+        self.assertEqual(execute("(* 3 -2)"), -6)
+        # Floor division
+        self.assertEqual(execute("(/ 6 2)"), 3)
+        self.assertEqual(execute("(/ 7 2)"), 3)
+        self.assertEqual(execute("(/ 1 2)"), 0)
+        self.assertEqual(execute("(/ 6 -2)"), -3)
+        self.assertEqual(execute("(/ -3 -2)"), 1)
+        # Modulo
+        self.assertEqual(execute("(% 7 2)"), 1)
+        self.assertEqual(execute("(% 6 -4)"), -2)
+        self.assertEqual(execute("(% 2 3)"), 2)
 
     def test_logic(self):
-        pass
+        # And
+        self.assertEqual(execute("(& true true)"), True)
+        self.assertEqual(execute("(& true false)"), False)
+        self.assertEqual(execute("(& false true)"), False)
+        self.assertEqual(execute("(& false false)"), False)
+        # Or
+        self.assertEqual(execute("(| true true)"), True)
+        self.assertEqual(execute("(| true false)"), True)
+        self.assertEqual(execute("(| false true)"), True)
+        self.assertEqual(execute("(| false false)"), False)
+        # Not
+        self.assertEqual(execute("(! true)"), False)
+        self.assertEqual(execute("(! false)"), True)
+
 
 
 

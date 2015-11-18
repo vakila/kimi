@@ -13,19 +13,6 @@ def tokenize(string):
 
     >>> tokenize("(+ 1 2)")
     [('opening', None), ('symbol', '+'), ('literal', 1), ('literal', 2), ('closing', None)]
-
-    >>> tokenize("(- 2 4)")
-    [('opening', None), ('symbol', '-'), ('literal', 2), ('literal', 4), ('closing', None)]
-
-    >>> tokenize('(define x "some string")')
-    [('opening', None), ('symbol', 'define'), ('symbol', 'x'), ('literal', 'some string'), ('closing', None)]
-
-    >>> tokenize('(define x "some (string)")')
-    [('opening', None), ('symbol', 'define'), ('symbol', 'x'), ('literal', 'some (string)'), ('closing', None)]
-
-    >>> tokenize("(define square (lambda x (* x x)))")
-    [('opening', None), ('symbol', 'define'), ('symbol', 'square'), ('opening', None), ('symbol', 'lambda'), ('symbol', 'x'), ('opening', None), ('symbol', '*'), ('symbol', 'x'), ('symbol', 'x'), ('closing', None), ('closing', None), ('closing', None)]
-
     '''
     special = ['(',')','"']
     whitespaces = [' ','\n','\t']
@@ -84,10 +71,10 @@ def parse(tokens):
         - type 'literal' (number, string, boolean, ...) has key 'value' (value: the literal)
 
     >>> parse(tokenize("(+ 1 2)"))
-    {'operator': {'type': 'symbol', 'value': '+'}, 'type': 'apply', 'arguments': ({'type': 'literal', 'value': 1}, {'type': 'literal', 'value': 2})}
-
-    >>> parse(tokenize("(define square (lambda x (* x x)))"))
-    {'operator': {'type': 'symbol', 'value': 'define'}, 'type': 'apply', 'arguments': ({'type': 'symbol', 'value': 'square'}, {'operator': {'type': 'symbol', 'value': 'lambda'}, 'type': 'apply', 'arguments': ({'type': 'symbol', 'value': 'x'}, {'operator': {'type': 'symbol', 'value': '*'}, 'type': 'apply', 'arguments': ({'type': 'symbol', 'value': 'x'}, {'type': 'symbol', 'value': 'x'})})})}
+    {'type': 'apply',
+     'operator': {'type': 'symbol', 'value': '+'},
+     'arguments': ({'type': 'literal', 'value': 1},
+                   {'type': 'literal', 'value': 2})}
 
     '''
     if len(tokens) == 0:

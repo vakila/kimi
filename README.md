@@ -13,9 +13,6 @@ or type a program as a string on the command line (this may give you headaches)
 
     $ python3 kimi.py "(+ 1 2)"
 
-## Running tests using doctest
-    $ python3 -m doctest -v kimi.py
-
 ## Basics
 * **Parentheses** are used to signal function calls, just like other lispy languages. Parentheses are not used for grouping, or any other purpose. For example, `(+ 1 2)` is a valid Kimi program, and `(+ (1) (2))` is not.
 * **Numbers** are limited to integers (e.g. `1`, `-439`). Kimi assumes that anything that *can* be interpreted as an integer *is* an integer; for example, `2` and `+2` become `2`, and `-2` becomes `-2`. A number containing a decimal point (e.g. `2.5`) will *not* be considered an integer, but a **symbol** (see below).
@@ -49,5 +46,14 @@ or type a program as a string on the command line (this may give you headaches)
 * Variable definition (names)
 * Conditionals
 * Lists (`empty`, `cons`, `first`, `rest`)
+
+## Running tests
+Using unittest (recommended):
+
+    $ python3 tests.py
+
+Using doctest (deprecated):
+
+    $ python3 -m doctest -v kimi.py
 
 ## Stay tuned!

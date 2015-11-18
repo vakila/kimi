@@ -54,6 +54,14 @@ def add_logic(env):
     return env
 
 def add_comparison(env):
+    fns = [('=', op.eq),
+           ('!=', op.ne),
+           ('>', op.gt),
+           ('<', op.lt),
+           ('>=', op.ge),
+           ('<=', op.le)]
+    for (symbol, fn) in fns:
+        env[symbol] = verify_arg_type(fn, int)
     return env
 
 def add_strings(env):

@@ -15,6 +15,7 @@ def tokenize(string):
     >>> tokenize("(+ 1 2)")
     [('opening', None), ('symbol', '+'), ('literal', 1), ('literal', 2), ('closing', None)]
     '''
+    assert_or_complain(string.count('(') == string.count(')'), "SYNTAX ERROR! Mismatching parentheses.")
     special = ['(',')','"']
     whitespaces = [' ','\n','\t']
     tokens = []
@@ -28,6 +29,9 @@ def tokenize(string):
             # the token is this character
             if this_char == "(":
                 token_type = 'opening'
+                next_char = remaining[1]
+                if next_char in special or next_char in whitespaces :
+                    complain_and_die("SYNTAX ERROR! Incorrect parenthesis use: " + '"' + this_char + next_char + '". Opening parenthesis must be immediately followed by the name of a function.')
             if this_char == ")":
                 token_type = 'closing'
             token_value = None

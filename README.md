@@ -40,7 +40,7 @@ or type a program as a string on the command line (this may give you headaches)
 ## Planned features
 * `lambda`
 * Built-in functions
-    * Comparison: `=`, `>`, `<`, `>=`, `<=`
+    * Comparison: `=`, `!=`, `>`, `<`, `>=`, `<=`
     * Strings: `concat`, `find`, `replace`, `substring`...?
 * Function application
 * Variable definition (names)

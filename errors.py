@@ -17,3 +17,9 @@ def throw_error(err_type, message):
     error = err_type.upper() + " ERROR!"
     print(error, message)
     quit()
+
+def assert_or_throw(assertion, err_type, message):
+    try:
+        assert assertion
+    except AssertionError:
+        throw_error(err_type, message)

@@ -38,6 +38,13 @@ class TestTokenize(unittest.TestCase):
              ('opening', None), ('symbol', '*'), ('symbol', 'x'), ('symbol', 'x'),
              ('closing', None), ('closing', None), ('closing', None)])
 
+    def test_bad_program(self):
+        self.assertRaises(SystemExit, tokenize, ("( + 1 2 )"))
+        self.assertRaises(SystemExit, tokenize, ("((+ 1 2))"))
+        self.assertEqual(tokenize("(+ 1 2) (+ 3 4)"),
+            [('opening', None), ('symbol', '+'), ('literal', 1), ('literal', 2), ('closing', None),
+             ('opening', None), ('symbol', '+'), ('literal', 3), ('literal', 4), ('closing', None)] )
+
 class TestParse(unittest.TestCase):
 
     def test_parse(self):
@@ -101,7 +108,13 @@ class TestExecute(unittest.TestCase):
         self.assertEqual(execute("(! true)"), False)
         self.assertEqual(execute("(! false)"), True)
 
+    def test_nesting(self):
+        self.assertEqual(execute("(| (& true false) (! true))"), False)
+        self.assertEqual(execute("(+ (* 2 3) (- 4 2))"), 8)
 
+    def test_bad_program(self):
+        self.assertRaises(SystemExit, execute, ("(+ (1) (2))"))
+        self.assertEqual(execute("(+ 1 2) (+ 3 4)"), 7) #or throw error
 
 
 if __name__ == '__main__':

@@ -108,6 +108,34 @@ def parse(tokens):
         return {'type': token_type, 'value': token_value}
 
 
+def special_forms():
+    specials = dict()
+
+    def do(args, env):
+        if len(args) == 0:
+            throw_error("syntax", "Incorrect use of (do ...): must take at least one argument.")
+        result = None
+        for a in args:
+            result = evaluate(a, env)
+        return result
+    specials['do'] = do
+
+    # def lamb(args, env):
+    #     pass
+    # specials['lambda'] = lamb
+
+    # def define(args, env):
+    #     pass
+    # specials['define'] = define
+
+    # def cond(args, env):
+    #     pass
+    # specials['if'] = cond
+
+    return specials
+
+SPECIALS = special_forms()
+
 def evaluate(expression, environment):
     '''Take an expression and environment as dictionaries.
     Evaluate the expression in the context of the environment, and return the result.
@@ -116,7 +144,6 @@ def evaluate(expression, environment):
     3
     '''
     #TODO need test case with local environment(s)
-
     expr_type = expression['type']
     if expr_type == 'literal':
         return expression['value']
@@ -128,8 +155,11 @@ def evaluate(expression, environment):
             complain_and_die("NAME ERROR! Undefined variable: " + symbol)
             #TODO can we give more information about which environment we're in?
     elif expr_type == 'apply':
-        fn = evaluate(expression['operator'], environment)
-        assert_or_complain(callable(fn), 'TYPE ERROR! Trying to call a non-function: ' + str(expression['operator']['value']) + '. Did you use parentheses correctly?')
+        operator = expression['operator']
+        if operator['value'] in SPECIALS:
+            return SPECIALS[operator['value']](expression['arguments'], environment)
+        fn = evaluate(operator, environment)
+        assert_or_complain(callable(fn), 'TYPE ERROR! Trying to call a non-function: ' + str(operator['value']) + '. Did you use parentheses correctly?')
         return fn(*[evaluate(arg, environment) for arg in expression['arguments']])
     else:
         complain_and_die("PARSING ERROR! Unexpected expression type: " + str(expression) + ".")

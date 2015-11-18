@@ -153,6 +153,12 @@ class TestSpecialForms(unittest.TestCase):
     def test_do(self):
         self.assertEqual(execute("(do (> 4 3))"), True)
         self.assertEqual(execute("(do (+ 1 2) (+ 3 4))"), 7)
+
+    def test_lambda(self):
+        self.assertTrue(callable(execute("(lambda x (* x x))")))
+        self.assertEqual(execute("((lambda x (* x x)) 2)"), 4)
+        self.assertEqual(execute("((lambda a b (! (& a b))) true false)"), True)
+        self.assertEqual(execute("((lambda a ((lambda y (- a y)) 3)) 7)"), 4)
     #
     # def test_define(self):
     #     self.assertEqual(execute("(do (define x 1) (+ x x))"), 2)

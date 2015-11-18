@@ -35,8 +35,8 @@ def tokenize(string):
                 except IndexError:
                     throw_error("syntax", 'Incorrect parenthesis use: "(" at end of program.')
                 else:
-                    if next_char in special or next_char in whitespaces :
-                        complain_and_die("SYNTAX ERROR! Incorrect parenthesis use: " + '"' + this_char + next_char + '". Opening parenthesis must be immediately followed by a function.')
+                    if next_char in [")", '"'] or next_char in whitespaces :
+                        throw_error("syntax", "Incorrect parenthesis use: " + '"' + this_char + next_char + '". Opening parenthesis must be immediately followed by a function.')
             if this_char == ")":
                 token_type = 'closing'
             token_value = None
@@ -181,7 +181,7 @@ def evaluate(expression, environment):
         if spec_form:
             return spec_form(expression['arguments'], environment)
         fn = evaluate(operator, environment)
-        assert_or_complain(callable(fn), 'TYPE ERROR! Trying to call a non-function: ' + str(operator['value']) + '. Did you use parentheses correctly?')
+        assert_or_throw(callable(fn), "type", 'Trying to call a non-function. Did you use parentheses correctly?')
         return fn(*[evaluate(arg, environment) for arg in expression['arguments']])
     else:
         complain_and_die("PARSING ERROR! Unexpected expression type: " + str(expression) + ".")

@@ -103,12 +103,6 @@ def evaluate(expression, environment):
     '''Take an expression and environment as dictionaries.
     Evaluate the expression in the context of the environment, and return the result.
 
-    >>> evaluate(parse(tokenize("-10")), standard_env())
-    -10
-
-    >>> evaluate(parse(tokenize("true")), standard_env())
-    True
-
     >>> evaluate(parse(tokenize("(+ 1 2)")), standard_env())
     3
     '''

@@ -40,7 +40,7 @@ class TestTokenize(unittest.TestCase):
 
     def test_syntax_errors(self):
         self.assertRaises(SystemExit, tokenize, ("( + 1 2 )"))
-        self.assertRaises(SystemExit, tokenize, ("((+ 1 2))"))
+        self.assertRaises(SystemExit, tokenize, ("(((+ 1 2)))"))
         self.assertRaises(SystemExit, tokenize, (")+ 1 2("))
         self.assertRaises(SystemExit, tokenize, ("+ 1 2()"))
         # self.assertEqual(tokenize("(+ 1 2) (+ 3 4)"),

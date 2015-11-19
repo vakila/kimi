@@ -13,7 +13,7 @@ def tokenize(string):
     >>> tokenize("(+ 1 2)")
     [('opening', None), ('symbol', '+'), ('literal', 1), ('literal', 2), ('closing', None)]
     '''
-    assert_or_complain(string.count('(') == string.count(')'), "SYNTAX ERROR! Mismatching parentheses.")
+    assert_or_throw(string.count('(') == string.count(')'), "syntax", "Mismatching parentheses!")
     assert_or_throw('(((' not in string, "syntax", 'Incorrect parenthesis use: "(((". Opening parenthesis must be immediately followed by a function.')
     special = ['(',')','"']
     whitespaces = [' ','\n','\t']
@@ -43,7 +43,7 @@ def tokenize(string):
             # the token is everything until the next "
             endquote_index = remaining[1:].find('"')
             if endquote_index == -1:
-                complain_and_die("SYNTAX ERROR! Improper string syntax.")
+                throw_error("syntax", "Improper string syntax.")
             endquote_index += 1
             token_value = remaining[1:endquote_index]
             token_type = 'literal'

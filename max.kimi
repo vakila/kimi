@@ -1,0 +1,11 @@
+(do
+    (define max
+        (lambda a b
+            (if (= a b)
+                nil
+                (if (> a b) a b)
+            )
+        )
+    )
+    (max 4312 4312)
+)

@@ -1,0 +1,11 @@
+(do
+    (define map
+        (lambda fn list
+            (if (= list nil)
+                nil
+                (prepend (fn (first list)) (map fn (rest list)))
+            )
+        )
+    )
+    (map ! (list true false true))
+)

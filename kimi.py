@@ -14,6 +14,25 @@ def execute(program):
     then evaluate the tree. Return the result, or an error message.'''
     return evaluate(parse(tokenize(program)), standard_env())
 
+def kimify(exp):
+    '''Convert a Python object back into a Kimi-readable string.'''
+    if exp == None:
+        return "nil"
+    elif type(exp) == bool:
+        return {True: "true", False: "false"}[exp]
+    elif type(exp) == int:
+        return str(exp)
+    elif type(exp) == str:
+        return '"' + exp + '"'
+    elif type(exp) == tuple:
+        return "(list " + kimify_list(exp) + ")"
+
+def kimify_list(tups):
+    if tups[1] == None:
+        return kimify(tups[0])
+    else:
+        return " ".join([kimify(tups[0]), kimify_list(tups[1])])
+
 
 if __name__ == "__main__":
     try:

@@ -8,15 +8,31 @@ You have three options for playing with Kimi code:
 
 1. Interact with the Kimi interpreter (REPL):
 
-        $ python3 kimi.py
+        $ kimi
+        Welcome to Kimi!
+        See the README (https://github.com/vakila/kimi) for information about Kimi.
+        To exit the interpreter, type "exit" or "quit" or "q".
+        kimi> ...
 
 2. Run a program from a `.kimi` file:
 
-        $ python3 kimi.py my_program.kimi
+        $ kimi my_program.kimi
+        ...
 
 3. Type a program as a string on the command line (only recommended for simple programs):
 
-        $ python3 kimi.py "(+ 1 2)"
+        $ kimi "(+ 1 2)"
+        3
+
+Note: to run the command `kimi`, you'll need to add the path to the `kimi/` directory to your `PATH`, e.g. add these lines to `~/.profile`:
+
+    PATH="/path/to/kimi:${PATH}"
+    export PATH
+
+But if you don't add `kimi` to your `PATH`, you can still run the commands above one of two ways:
+
+    $ ./kimi
+    $ python3 kimi
 
 ## An example program
 In `samples/sample.kimi`:

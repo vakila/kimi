@@ -115,10 +115,6 @@ def add_lists(env):
         ('rest', rest)], env)
 
 def add_builtins(pairs, env, arg_type=None):
-    print("__add_builtins__")
-    print("pairs:", pairs)
-    print("env:", env)
-    print("arg_type:", arg_type)
     for (symbol, value) in pairs:
         if arg_type:
             env[symbol] = verify_arg_type(value, arg_type)

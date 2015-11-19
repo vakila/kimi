@@ -47,6 +47,36 @@ You have three options for playing with Kimi code:
 * `first` returns the first item in the list: `(first (list 1 2)) => 1`
 * `rest` allow you to access the remainder of the list, i.e. the second item of the tuple: `(rest (list 1 2)) => (2, None)`
 
+## Using `do`
+* To imperatively execute several commands one after the other, wrap them in `(do ...)`. Kimi will evaluate each expression in turn, and return the result of the last expression evaluated. For example, the following programs both give `7`:
+    ~~~
+    (do (define x 3) (define y 4) (+ x y))
+    ~~~
+    ~~~
+    (do (+ 1 2) (+ 3 4))
+    ~~~
+* Each `do` block has its own scope; names defined in one `do` block are not accessible from parent or sibling blocks. For example, the following programs will throw errors when trying to access `x`:
+    ~~~
+    (do
+        (do (define x 3))
+        (+ 1 x)
+    )
+    ~~~
+    ~~~
+    (do
+        (do (define x 3))
+        (do (define y 4) (+ x y))
+    )
+    ~~~
+* Kimi does not know how to imperatively evaluate multiple expressions if they are not wrapped in a `do` block. In this case, Kimi will evaluate the first command it finds and ignore the rest. For example, we saw above that this program evaluates to `7`:
+    ~~~
+    (do (+ 1 2) (+ 3 4))
+    ~~~
+    But this program evaluates to `3`:
+    ~~~
+    (+ 1 2) (+ 3 4)
+    ~~~
+
 ## Built-in functions
 * Arithmetic:
     * `+` (addition): `(+ 1 2) => 3`

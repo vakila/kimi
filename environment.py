@@ -38,6 +38,7 @@ def standard_env():
     add_equality(env)
     add_comparison(env)
     add_strings(env)
+    add_lists(env)
 
     return env
 
@@ -59,22 +60,18 @@ def verify_arg_type(fn, t):
     return verifier
 
 def add_arithmetic(env):
-    fns = [('+', op.add),
-           ('-', op.sub),
-           ('*', op.mul),
-           ('/', op.floordiv),
-           ('%', op.mod)]
-    for (symbol, fn) in fns:
-        env[symbol] = verify_arg_type(fn, int)
-    return env
+    add_builtins([
+        ('+', op.add),
+        ('-', op.sub),
+        ('*', op.mul),
+        ('/', op.floordiv),
+        ('%', op.mod)], env, int)
 
 def add_logic(env):
-    fns = [('&', lambda a,b: a and b),
-           ('|', lambda a,b: a or b),
-           ('!', lambda a: not a)]
-    for (symbol, fn) in fns:
-        env[symbol] = verify_arg_type(fn, bool)
-    return env
+    add_builtins([
+        ('&', lambda a,b: a and b),
+        ('|', lambda a,b: a or b),
+        ('!', lambda a: not a)], env, bool)
 
 def add_equality(env):
     def equals(a, b):
@@ -83,16 +80,24 @@ def add_equality(env):
         else:
             return a == b
     env["="] = equals
-    return env
 
 def add_comparison(env):
-    fns = [('>', op.gt),
-           ('<', op.lt),
-           ('>=', op.ge),
-           ('<=', op.le)]
-    for (symbol, fn) in fns:
-        env[symbol] = verify_arg_type(fn, int)
-    return env
+    add_builtins([
+        ('>', op.gt),
+        ('<', op.lt),
+        ('>=', op.ge),
+        ('<=', op.le)], env, int)
 
 def add_strings(env):
-    return env
+    pass
+
+def add_builtins(pairs, env, arg_type=None):
+    print("__add_builtins__")
+    print("pairs:", pairs)
+    print("env:", env)
+    print("arg_type:", arg_type)
+    for (symbol, value) in pairs:
+        if arg_type:
+            env[symbol] = verify_arg_type(value, arg_type)
+        else:
+            env[symbol] = value

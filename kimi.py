@@ -157,9 +157,15 @@ def special_forms():
         env.set(variable, evaluate(args[1], env))
     specials['define'] = define
 
-    # def cond(args, env):
-    #     pass
-    # specials['if'] = cond
+    def cond(args, env):
+        if len(args) != 3:
+            throw_error("syntax", "Incorrect use of (if ...): must take exactly three arguments (a test, a success case and a fail case).")
+        test = evaluate(args[0], env)
+        if test:
+            return evaluate(args[1], env)
+        else:
+            return evaluate(args[2], env)
+    specials['if'] = cond
 
     return specials
 

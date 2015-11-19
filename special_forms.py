@@ -42,7 +42,9 @@ def define(args, env):
         throw_error("syntax", "Incorrect use of (define ...): must take exactly two arguments.")
     assert_or_throw(args[0]['type'] == 'symbol', "type", "Incorrect use of (define ...): the variable must be a symbol.")
     variable = args[0]['value']
-    env.set(variable, ev.evaluate(args[1], env))
+    value = ev.evaluate(args[1], env)
+    env.set(variable, value)
+    return value
 
 def cond(args, env):
     if len(args) != 3:

@@ -91,6 +91,29 @@ def add_comparison(env):
 def add_strings(env):
     pass
 
+def add_lists(env):
+    def prepend(first, rest):
+        return (first, rest)
+
+    def first(listy):
+        return listy[0]
+
+    def rest(listy):
+        return listy[1]
+
+    def make_list(*args):
+        result = None
+        for x in reversed(args):
+            result = (x, result)
+        return result
+
+    add_builtins([
+        ('empty', None),
+        ('list', make_list),
+        ('prepend', prepend),
+        ('first', first),
+        ('rest', rest)], env)
+
 def add_builtins(pairs, env, arg_type=None):
     print("__add_builtins__")
     print("pairs:", pairs)

@@ -117,11 +117,12 @@ def special_forms():
     specials = dict()
 
     def do(args, env):
+        do_env = Environment(name="do", outer=env)
         if len(args) == 0:
             throw_error("syntax", "Incorrect use of (do ...): must take at least one argument.")
         result = None
         for a in args:
-            result = evaluate(a, env)
+            result = evaluate(a, do_env)
         return result
     specials['do'] = do
 

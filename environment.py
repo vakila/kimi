@@ -33,6 +33,7 @@ def standard_env():
     env = Environment()
 
     add_booleans(env)
+    add_nil(env)
     add_arithmetic(env)
     add_logic(env)
     add_equality(env)
@@ -47,6 +48,9 @@ def add_booleans(env):
     env['true'] = True
     env['false'] = False
     return env
+
+def add_nil(env):
+    env['nil'] = None
 
 def verify_arg_type(fn, t):
     '''Function wrapper that makes function fn only accept arguments of type t.
@@ -96,9 +100,13 @@ def add_lists(env):
         return (first, rest)
 
     def first(listy):
+        if listy == None:
+            return None
         return listy[0]
 
     def rest(listy):
+        if listy == None:
+            return None
         return listy[1]
 
     def make_list(*args):
@@ -108,15 +116,14 @@ def add_lists(env):
         return result
 
     add_builtins([
-        ('empty', None),
         ('list', make_list),
         ('prepend', prepend),
         ('first', first),
         ('rest', rest)], env)
 
 def add_builtins(pairs, env, arg_type=None):
-    for (symbol, value) in pairs:
+    for (symbol, fn) in pairs:
         if arg_type:
-            env[symbol] = verify_arg_type(value, arg_type)
+            env[symbol] = verify_arg_type(fn, arg_type)
         else:
-            env[symbol] = value
+            env[symbol] = fn

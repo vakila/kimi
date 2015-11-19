@@ -43,6 +43,8 @@ def kimify(exp):
         return '"' + exp + '"'
     elif type(exp) == tuple:
         return "(list " + kimify_list(exp) + ")"
+    elif callable(exp):
+        return "<" + exp.__name__ + " function>"
 
 def kimify_list(tups):
     if tups[1] == None:

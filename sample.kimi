@@ -1,1 +1,5 @@
-(% 7 2)
+(do
+    (define make_adder (lambda n (lambda x (+ n x))))
+    (define add3 (make_adder 3))
+    (add3 4)
+)

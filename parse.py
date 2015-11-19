@@ -25,17 +25,17 @@ def parse(tokens):
     '''
     # print("tokens:", tokens)
     if len(tokens) == 0:
-        complain_and_die("SYNTAX ERROR! Nothing left to parse.")
+        throw_error("syntax", "Nothing left to parse.")
     (token_type, token_value) = tokens.pop(0)
     if token_type == 'closing':
-        complain_and_die("SYNTAX ERROR! Unexpected ')'.")
+        throw_error("syntax", "Unexpected ')'.")
     elif token_type == 'opening':
         # print("OPENING")
         operator = parse(tokens)
         arguments = []
         while True:
             if not tokens:
-                complain_and_die("SYNTAX ERROR! Unexpected end of program.")
+                throw_error("syntax", "Unexpected end of program.")
             next_token = tokens[0]
             if next_token[0] == 'closing':
                 # print("CLOSING")

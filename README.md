@@ -1,8 +1,7 @@
 # Kimi
-A lispy toy programming language that keeps it minimal,
-and its interpreter in Python 3.
+A lispy toy programming language that keeps it minimal, interpreted in Python 3.
 
-Created by [Anjana](https://github.com/vakila) at the [Recurse Center](https://www.recurse.com).
+Made by [Anjana Vakil](https://github.com/vakila) at the [Recurse Center](https://www.recurse.com).
 
 ## Using Kimi
 You have three options for playing with Kimi code:
@@ -42,7 +41,7 @@ You have three options for playing with Kimi code:
 * Lambdas are written in the form `(lambda args... body)`, where `args...` stands for one or more arguments and `body` stands for an expression that will evaluate to a function application.
 
 ## Lists
-* `nil` represents an empty list. It is based on Python's `None`, *not* on an empty Python list (`[]`). All non-empty lists are built up from `nil`, i.e. contain `nil` as the last element.
+* All non-empty lists are built up from `nil`, Kimi's equivalent to Python's `None`. In other words, all lists contain `nil` as the last element. An empty list is represented as simply `nil`.
 * Non-empty lists are written as `(list 1 2 3)`. Internally, they are represented as nested Python tuples of pairs of values, where the innermost tuple contains `nil` as its second value. For example, Kimi interprets `(list 1 2 3)` as `(1, (2, (3, None)))`.
 * `prepend` adds an argument to the front of a list, and `list` is essentially a shorthand for multiple `prepend` calls: `(list 1) = (prepend 1 nil) => (1, None)`, `(list 1 2) = (prepend 1 (prepend 2 nil)) => (1, (2, None))`
 * `first` returns the first item in the list: `(first (list 1 2)) => 1`

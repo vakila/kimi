@@ -3,36 +3,7 @@ A lispy toy programming language that keeps it minimal, interpreted in Python 3.
 
 Made by [Anjana Vakil](https://github.com/vakila) at the [Recurse Center](https://www.recurse.com).
 
-## Using Kimi
-You have three options for playing with Kimi code:
-
-1. Interact with the Kimi interpreter (REPL):
-
-        $ kimi
-        Welcome to Kimi!
-        See the README (https://github.com/vakila/kimi) for information about Kimi.
-        To exit the interpreter, type "exit" or "quit" or "q".
-        kimi> ...
-
-2. Run a program from a `.kimi` file:
-
-        $ kimi my_program.kimi
-        ...
-
-3. Type a program as a string on the command line (only recommended for simple programs):
-
-        $ kimi "(+ 1 2)"
-        3
-
-Note: to run the command `kimi`, you'll need to add the path to the `kimi/` directory to your `PATH`, e.g. add these lines to `~/.profile`:
-
-    PATH="/path/to/kimi:${PATH}"
-    export PATH
-
-But if you don't add `kimi` to your `PATH`, you can still run the commands above one of two ways:
-
-    $ ./kimi
-    $ python3 kimi
+---
 
 ## An example program
 In `samples/sample.kimi`:
@@ -136,9 +107,38 @@ $ python3 kimi.py samples/sample.kimi
     * `<=` (less than or equal to): `(<= 3 2) = False`
     * *These functions take only integer arguments*
 
-## Possible future features
-* Built-in string functions (e.g. `concat`, `find`, `replace`, `substring`...)
-* Macros
+
+## Using Kimi
+You have three options for playing with Kimi code:
+
+1. Interact with the Kimi interpreter (REPL):
+
+        $ kimi
+        Welcome to Kimi!
+        See the README (https://github.com/vakila/kimi) for information about Kimi.
+        To exit the interpreter, type "exit" or "quit" or "q".
+        kimi> ...
+
+2. Run a program from a `.kimi` file:
+
+        $ kimi my_program.kimi
+        ...
+
+3. Type a program as a string on the command line (only recommended for simple programs):
+
+        $ kimi "(+ 1 2)"
+        3
+
+Note: to run the command `kimi`, you'll need to add the path to the `kimi/` directory to your `PATH`, e.g. add these lines to `~/.profile`:
+
+    PATH="/path/to/kimi:${PATH}"
+    export PATH
+
+But if you don't add `kimi` to your `PATH`, you can still run the commands above one of two ways:
+
+    $ ./kimi
+    $ python3 kimi
+
 
 ## Running tests
 Using unittest (recommended):
@@ -149,4 +149,9 @@ Using doctest (deprecated):
 
     $ python3 -m doctest -v kimi.py
 
+---
+
 ## Stay tuned!
+Possible future features:
+* Built-in string functions (e.g. `concat`, `find`, `replace`, `substring`...)
+* Macros

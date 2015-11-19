@@ -43,9 +43,8 @@ You have three options for playing with Kimi code:
 
 ## Lists
 * `nil` represents an empty list. It is based on Python's `None`, *not* on an empty Python list (`[]`). All non-empty lists are built up from `nil`, i.e. contain `nil` as the last element.
-* Non-empty lists are constructed as nested Python tuples of pairs of values, i.e. Kimi interprets `(list 1 2 3)` as `(1, (2, (3, None)))`.
-* `prepend` adds an argument to the front of a list: `(prepend 1 (prepend 2 nil)) => (1, (2, None))`
-* `list` is a shorthand for multiple `prepend` calls: `(list 1 2) => (1, (2, None))`
+* Non-empty lists are written as `(list 1 2 3)`. Internally, they are represented as nested Python tuples of pairs of values, where the innermost tuple contains `nil` as its second value. For example, Kimi interprets `(list 1 2 3)` as `(1, (2, (3, None)))`.
+* `prepend` adds an argument to the front of a list, and `list` is essentially a shorthand for multiple `prepend` calls: `(list 1) = (prepend 1 nil) => (1, None)`, `(list 1 2) = (prepend 1 (prepend 2 nil)) => (1, (2, None))`
 * `first` returns the first item in the list: `(first (list 1 2)) => 1`
 * `rest` allow you to access the remainder of the list, i.e. the second item of the tuple: `(rest (list 1 2)) => (2, None)`
 

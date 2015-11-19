@@ -2,7 +2,6 @@
 # Anjana Vakil
 # http://www.github.com/vakila/kimi
 
-from evaluate import evaluate
 from errors import *
 
 def tokenize(string):

@@ -2,8 +2,8 @@
 # Anjana Vakil
 # http://www.github.com/vakila/kimi
 
-import evaluate as ev
-from environment import Environment
+import evaluator as ev
+from environments import Environment
 from errors import *
 
 def do(args, env):

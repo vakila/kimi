@@ -3,7 +3,7 @@
 # http://www.github.com/vakila/kimi
 
 import special_forms as sf
-from environment import Environment
+from environments import Environment
 from errors import *
 
 SPECIALS = sf.special_forms()

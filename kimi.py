@@ -3,10 +3,10 @@
 # http://www.github.com/vakila/kimi
 
 import sys
-from environment import standard_env
-from tokenize import tokenize
-from parse import parse
-from evaluate import evaluate
+from tokenizer import tokenize
+from parser import parse
+from evaluator import evaluate
+from environments import standard_env
 from errors import *
 
 def execute(program):

@@ -127,21 +127,21 @@ def special_forms():
     specials['do'] = do
 
     def lamb(args, env):
-        print("\n")
-        print("args (" + str(len(args)) + "):", args)
-        print("env: ", env.name)
+        # print("\n")
+        # print("args (" + str(len(args)) + "):", args)
+        # print("env: ", env.name)
         if len(args) < 2:
             throw_error("syntax", "Incorrect use of (lambda ...): must take at least two arguments (at least one variable and a body).")
         largs = args[:-1]
         lbody = args[-1]
-        print("largs (" + str(len(largs)) + "):", largs)
+        # print("largs (" + str(len(largs)) + "):", largs)
         for l in largs:
             assert_or_throw(l['type'] == 'symbol', "syntax", "Incorrect use of (lambda ...): the anonymous function's variables must be symbols.")
         largs = tuple(la['value'] for la in largs)
-        print("lbody:", lbody)
+        # print("lbody:", lbody)
         def anonymous(*arguments):
-            print("inside anonymous function")
-            print("arguments(" + str(len(arguments)) + "):", arguments)
+            # print("inside anonymous function")
+            # print("arguments(" + str(len(arguments)) + "):", arguments)
             if len(arguments) != len(largs):
                 throw_error("syntax", "This function takes " + str(len(largs)) + " arguments (" + str(len(arguments)) + " provided).")
             lenv = Environment(name="anon_fn", outer=env, variables=largs, values=arguments)
@@ -180,9 +180,9 @@ def evaluate(expression, environment):
     >>> evaluate(parse(tokenize("(+ 1 2)")), standard_env())
     3
     '''
-    print("EVALUATING:", expression)
+    # print("EVALUATING:", expression)
     expr_type = expression['type']
-    print("EXPR_TYPE:", expr_type)
+    # print("EXPR_TYPE:", expr_type)
     if expr_type == 'literal':
         return expression['value']
     elif expr_type == 'symbol':

@@ -72,12 +72,9 @@ You have three options for playing with Kimi code:
     * `<=` (less than or equal to): `(<= 3 2) = False`
     * *These functions take only integer arguments*
 
-## Planned features
-* REPL
-* Built-in functions
-    * Strings: `concat`, `find`, `replace`, `substring`...?
-* Macros?
-
+## Possible future features
+* Built-in string functions (e.g. `concat`, `find`, `replace`, `substring`...)
+* Macros
 
 ## Running tests
 Using unittest (recommended):

@@ -3,7 +3,27 @@ A lispy toy programming language that keeps it minimal, interpreted in Python 3.
 
 Made by [Anjana Vakil](https://github.com/vakila) at the [Recurse Center](https://www.recurse.com).
 
+### Why did I build Kimi?
+A few weeks into my batch at the [Recurse Center](https://www.recurse.com), resident [Prabhakar Ragde](https://cs.uwaterloo.ca/~plragde/) gave a talk called "Small, Elegant, Practical: The benefits of a minimal approach", in which he laid out a minimal set of features (see below) for a small, elegant programming language. It was interesting to know that a programming language doesn't in principle need to have a huge set of features, like most of the major languages do.
+
+I didn't know much about programming languages before coming to RC, and although I had a vague sense of what interpreters/compilers do, I didn't really know what was going on under the hood. So, with some inspiration from Prabhakar's talk, and some encouragement from RC facilitator [John Workman](http://workmajj.com/), I decided to write a little interpreter for such a minimal language myself.
+
+### How did I build Kimi?
+In crafting the language, I tried to stick as closely as possible to the set of features that a minimal, elegant language should have, as laid out by Prabhakar:
+* `lambda` expressions
+* Some useful built-in functions (e.g. arithmetic)
+* Function application
+* Variable definition
+* Conditional evaluation
+* Lists
+
+To write the interpreter, I loosely followed two tutorials:
+* the [Programming language project](http://eloquentjavascript.net/11_language.html) outlined by another RC resident, [Marijn Haverbeke](http://marijnhaverbeke.nl/), in his excellent and fun book [Eloquent Javascript](http://eloquentjavascript.net). That project is in JavaScript, but
+* [Peter Norvig]()'s tutorial [(How to Write a (Lisp) Interpreter (in Python))](http://norvig.com/lispy.html).
+
+
 ---
+# The Kimi language
 
 ## An example program
 In `samples/sample.kimi`:
@@ -107,8 +127,10 @@ $ python3 kimi.py samples/sample.kimi
     * `<=` (less than or equal to): `(<= 3 2) = False`
     * *These functions take only integer arguments*
 
+---
+# Using Kimi
 
-## Using Kimi
+## Running Kimi code
 You have three options for playing with Kimi code:
 
 1. Interact with the Kimi interpreter (REPL):
@@ -150,8 +172,3 @@ Using doctest (deprecated):
     $ python3 -m doctest -v kimi.py
 
 ---
-
-## Stay tuned!
-Possible future features:
-* Built-in string functions (e.g. `concat`, `find`, `replace`, `substring`...)
-* Macros

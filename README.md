@@ -4,12 +4,18 @@ and its interpreter in Python 3.
 
 Created by [Anjana](https://github.com/vakila) at the [Recurse Center](https://www.recurse.com).
 
-## Running programs
-Run a program from a `.kimi` file:
+## Using Kimi
+You have three options for playing with Kimi code:
+
+1. Interact with the Kimi interpreter (REPL):
+
+    $ python3 kimi.py
+
+2. Run a program from a `.kimi` file:
 
     $ python3 kimi.py my_program.kimi
 
-or type a program as a string on the command line (this may give you headaches)
+3. Type a program as a string on the command line (only recommended for simple programs):
 
     $ python3 kimi.py "(+ 1 2)"
 

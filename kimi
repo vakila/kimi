@@ -26,6 +26,8 @@ def repl():
     global_env = standard_env()
     while True:
         command = input(prompt)
+        if command == "":
+            continue
         if command in quit_commands:
             return "Goodbye!"
         val = evaluate(parse(tokenize(command)), global_env)

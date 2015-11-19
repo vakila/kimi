@@ -148,6 +148,13 @@ class TestBuiltins(unittest.TestCase):
         self.assertEqual(execute("(<= 2 2)"), True)
         self.assertEqual(execute("(<= 1 2)"), True)
 
+    def test_lists(self):
+        self.assertEqual(execute("(prepend 1 (prepend 2 nil))"), (1, (2, None)))
+        self.assertEqual(execute("(list 1 2)"), (1, (2, None)))
+        self.assertEqual(execute("(first (list 1 2))"), 1)
+        self.assertEqual(execute("(rest (list 1 2))"), (2, None))
+
+
 class TestSpecialForms(unittest.TestCase):
 
     def test_do(self):

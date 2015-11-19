@@ -9,15 +9,15 @@ You have three options for playing with Kimi code:
 
 1. Interact with the Kimi interpreter (REPL):
 
-    $ python3 kimi.py
+        $ python3 kimi.py
 
 2. Run a program from a `.kimi` file:
 
-    $ python3 kimi.py my_program.kimi
+        $ python3 kimi.py my_program.kimi
 
 3. Type a program as a string on the command line (only recommended for simple programs):
 
-    $ python3 kimi.py "(+ 1 2)"
+        $ python3 kimi.py "(+ 1 2)"
 
 ## Basics
 * **Parentheses** are used to signal function calls, just like other lispy languages. Parentheses are not used for grouping, or any other purpose. An opening parenthesis must be immediately followed by a function (i.e. a builtin, the name of a `define`d function, or a `lambda` expression). For example, `(+ 1 2)` is a valid Kimi program; `( + 1 2 )`, `(((+ 1 2)))`, and `(+ (1) (2))` are not.

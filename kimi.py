@@ -14,6 +14,21 @@ def execute(program):
     then evaluate the tree. Return the result, or an error message.'''
     return evaluate(parse(tokenize(program)), standard_env())
 
+def repl():
+    '''An interactive Read-Evaluate-Print Loop that takes in Kimi code from a prompt and evaluates it.'''
+    quit_commands = ["exit", "quit", "q"]
+    print("Welcome to Kimi!")
+    print("See the README (https://github.com/vakila/kimi) for information about Kimi.")
+    print('To exit the interpreter, type "' + '" or "'.join(quit_commands) + '".')
+    prompt = 'kimi> '
+    global_env = standard_env()
+    while True:
+        command = input(prompt)
+        if command in quit_commands:
+            return "Goodbye!"
+        val = evaluate(parse(tokenize(command)), global_env)
+        print(kimify(val))
+
 def kimify(exp):
     '''Convert a Python object back into a Kimi-readable string.'''
     if exp == None:

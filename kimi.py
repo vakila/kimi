@@ -152,15 +152,17 @@ def special_forms():
     def define(args, env):
         if len(args) != 2:
             throw_error("syntax", "Incorrect use of (define ...): must take exactly two arguments.")
-        assert_or_throw(args[0]['type'] == 'symbol', "syntax", "Incorrect use of (define ...): the variable must be a symbol.")
+        assert_or_throw(args[0]['type'] == 'symbol', "type", "Incorrect use of (define ...): the variable must be a symbol.")
         variable = args[0]['value']
         env.set(variable, evaluate(args[1], env))
     specials['define'] = define
 
     def cond(args, env):
         if len(args) != 3:
-            throw_error("syntax", "Incorrect use of (if ...): must take exactly three arguments (a test, a success case and a fail case).")
+            throw_error("syntax", "Incorrect use of (if ...): must take exactly three arguments (a test, a pass case, and a fail case).")
         test = evaluate(args[0], env)
+        if type(test) != bool:
+            throw_error("type", "Incorrect use of (if ...): the test must evaluate to a boolean.")
         if test:
             return evaluate(args[1], env)
         else:

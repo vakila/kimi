@@ -10,8 +10,6 @@ class Environment(dict):
     def __init__(self, name = "global", outer = None, variables=(), values=()):
         self.name = name
         self.outer = outer
-        # if outer:
-        #     self.update(outer.items())
         self.update(zip(variables, values))
 
     def get(self, key):
@@ -21,6 +19,13 @@ class Environment(dict):
             throw_error("name", "Undefined variable: " + key)
         else:
             return self.outer.get(key)
+
+    def set(self, key, value):
+        if key in self:
+            throw_error("name", "Variable " + key + " already exists in " + self.name + " environment!")
+        # else warn if exists in an outer env
+        else:
+            self[key] = value
 
 def standard_env():
     '''Returns the standard environment as a dictionary of (variable: value) pairs

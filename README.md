@@ -25,6 +25,24 @@ or type a program as a string on the command line (this may give you headaches)
 * Any symbol (see above) is a valid name, as long as it does not already exist. For example, `x`, `123abc123`, and `--thing--` are valid names, but `define`, `-`, and `first` are not, since they already exist as built-in functions (see below).
 * Just because something *can* be used as a name doesn't mean it *should*; for example `2.5` and `-2-4` are valid names (see above), but not very good ones!
 
+## Conditionals
+* Conditional statements are written in the form `(if <test> <pass_case> <fail_case>)`.
+* The first argument (the test) must be an expression that evaluates to a boolean.
+* If the test evaluates to `true`, the second argument will be evaluated. If not, the third argument will be evaluated.
+* For example: `(if true 1 2) => 1`, `(if false 1 2) => 2`.
+
+## Lambda expressions
+* Lambda expressions can be used to create anonymous functions. For example, `(lambda x (* x x))` evaluates to a function that takes one (integer) argument and returns its square.
+* Lambdas are written in the form `(lambda args... body)`, where `args...` stands for one or more arguments and `body` stands for an expression that will evaluate to a function application.
+
+## Lists
+* `nil` represents an empty list. It is based on Python's `None`, *not* on an empty Python list (`[]`). All non-empty lists are built up from `nil`, i.e. contain `nil` as the last element.
+* Non-empty lists are constructed as nested Python tuples of pairs of values, i.e. Kimi interprets `(list 1 2 3)` as `(1, (2, (3, None)))`.
+* `prepend` adds an argument to the front of a list: `(prepend 1 (prepend 2 nil)) => (1, (2, None))`
+* `list` is a shorthand for multiple `prepend` calls: `(list 1 2) => (1, (2, None))`
+* `first` returns the first item in the list: `(first (list 1 2)) => 1`
+* `rest` allow you to access the remainder of the list, i.e. the second item of the tuple: `(rest (list 1 2)) => (2, None)`
+
 ## Built-in functions
 * Arithmetic:
     * `+` (addition): `(+ 1 2) => 3`

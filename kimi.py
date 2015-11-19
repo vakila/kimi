@@ -35,16 +35,20 @@ def kimify_list(tups):
 
 
 if __name__ == "__main__":
-    try:
+    if len(sys.argv) == 1:
+        repl()
+        #activate repl
+    elif len(sys.argv) == 2:
         program = sys.argv[1]
-    except:
-        print("Usage:")
-        print("$ python3 kimi.py my_program.kimi")
-        print('$ python3 kimi.py "(+ 1 2)"')
-    else:
         if program.endswith('.kimi'):
             with open(program, 'r') as f:
                 program = f.read()
-            print("Evaluating program:")
-            print(program)
-        print(execute(program))
+            # print("Evaluating program:")
+            # print(program)
+            # print("\nResult:")
+        print(kimify(execute(program)))
+    else:
+        print("Usage:")
+        print("Activate the interactive interpreter (REPL): $ python3 kimi.py")
+        print("Evaluate a Kimi program in an external file: $ python3 kimi.py my_program.kimi")
+        print('Evaluate a simple Kimi program as a string:  $ python3 kimi.py "(+ 1 2)"')

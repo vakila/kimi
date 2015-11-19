@@ -20,9 +20,9 @@ or type a program as a string on the command line (this may give you headaches)
 * **Booleans** are `true` and `false` (based on Python's `True` and `False`).
 * Anything in your program that is not one of the above is considered a **symbol**.
 
-## Names
+## Defining names
 * Names can be assigned like so: `(define x 5)`.
-* Any symbol (see above) is a valid name, as long as it does not already exist. For example, `x`, `123abc123`, and `--thing--` are valid names, but `define`, `-`, and `first` are not, since they already exist as built-in functions (see below).
+* Any symbol (see above) is a valid name, as long as it does not already exist in the given environment. For example, `x`, `123abc123`, and `--thing--` are valid names, but `define`, `-`, `nil`, and `first` are not, since they already exist as built-in functions (see below).
 * Just because something *can* be used as a name doesn't mean it *should*; for example `2.5` and `-2-4` are valid names (see above), but not very good ones!
 
 ## Conditionals
@@ -68,13 +68,11 @@ or type a program as a string on the command line (this may give you headaches)
     * *These functions take only integer arguments*
 
 ## Planned features
-* `lambda`
+* REPL
 * Built-in functions
     * Strings: `concat`, `find`, `replace`, `substring`...?
-* Function application
-* Variable definition (names)
-* Conditionals
-* Lists (`empty`, `cons`, `first`, `rest`)
+* Macros?
+
 
 ## Running tests
 Using unittest (recommended):

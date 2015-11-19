@@ -173,6 +173,7 @@ class TestSpecialForms(unittest.TestCase):
     def test_if(self):
         self.assertEqual(execute("(if true 1 2)"), 1)
         self.assertEqual(execute("(if false 1 2)"), 2)
+        self.assertRaises(SystemExit, execute, "(if 1 2 3)")
 
 
 if __name__ == '__main__':

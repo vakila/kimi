@@ -149,9 +149,13 @@ def special_forms():
         return anonymous
     specials['lambda'] = lamb
 
-    # def define(args, env):
-    #     pass
-    # specials['define'] = define
+    def define(args, env):
+        if len(args) != 2:
+            throw_error("syntax", "Incorrect use of (define ...): must take exactly two arguments.")
+        assert_or_throw(args[0]['type'] == 'symbol', "syntax", "Incorrect use of (define ...): the variable must be a symbol.")
+        variable = args[0]['value']
+        env.set(variable, evaluate(args[1], env))
+    specials['define'] = define
 
     # def cond(args, env):
     #     pass

@@ -18,7 +18,7 @@ In crafting the language, I tried to stick as closely as possible to the set of 
 * Lists
 
 To write the interpreter, I loosely followed two tutorials:
-* the [Programming language project](http://eloquentjavascript.net/11_language.html) outlined by another RC resident, [Marijn Haverbeke](http://marijnhaverbeke.nl/), in his excellent and fun book [Eloquent Javascript](http://eloquentjavascript.net). That project is in JavaScript, but
+* the [Programming language project](http://eloquentjavascript.net/11_language.html) outlined by another RC resident, [Marijn Haverbeke](http://marijnhaverbeke.nl/), in his excellent and fun book [Eloquent Javascript](http://eloquentjavascript.net). Marijn himself also provided invaluable assistance by pair-programming with me on some components of the interpreter.
 * [Peter Norvig]()'s tutorial [(How to Write a (Lisp) Interpreter (in Python))](http://norvig.com/lispy.html).
 
 

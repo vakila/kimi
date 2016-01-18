@@ -6,7 +6,7 @@ Made by [Anjana Vakil](https://github.com/vakila) at the [Recurse Center](https:
 ### Why did I build Kimi?
 A few weeks into my batch at the [Recurse Center](https://www.recurse.com), resident [Prabhakar Ragde](https://cs.uwaterloo.ca/~plragde/) gave a talk called "Small, Elegant, Practical: The benefits of a minimal approach", in which he laid out a minimal set of features (see below) for a small, elegant programming language. It was interesting to know that a programming language doesn't in principle need to have a huge set of features, like most of the major languages do.
 
-I didn't know much about programming languages before coming to RC, and although I had a vague sense of what interpreters/compilers do, I didn't really know what was going on under the hood. So, with some inspiration from Prabhakar's talk, and some encouragement from RC facilitator [John Workman](http://workmajj.com/), I decided to write a little interpreter for such a minimal language myself.
+I didn't know much about how programming languages are created before coming to RC, and although I had a vague sense of what interpreters/compilers do, I didn't really know what was going on under the hood. So, with some inspiration from Prabhakar's talk, and some encouragement from RC facilitator [John Workman](http://workmajj.com/), I decided to write a little interpreter for such a minimal language myself.
 
 ### How did I build Kimi?
 In crafting the language, I tried to stick as closely as possible to the set of features that a minimal, elegant language should have, as laid out by Prabhakar:

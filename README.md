@@ -68,10 +68,10 @@ $ python3 kimi.py samples/sample.kimi
 
 ## Lists
 * All non-empty lists are built up from `nil`, Kimi's equivalent to Python's `None`. In other words, all lists contain `nil` as the last element. An empty list is represented as simply `nil`.
-* Non-empty lists are written as `(list 1 2 3)`. Internally, they are represented as nested Python tuples of pairs of values, where the innermost tuple contains `nil` as its second value. For example, Kimi interprets `(list 1 2 3)` as `(1, (2, (3, None)))`.
-* `prepend` adds an argument to the front of a list, and `list` is essentially a shorthand for multiple `prepend` calls: `(list 1) = (prepend 1 nil) => (1, None)`, `(list 1 2) = (prepend 1 (prepend 2 nil)) => (1, (2, None))`
+* Non-empty lists are written as `(list 1 2 3)`. Internally, they are represented as nested tuples of pairs of values, where the innermost tuple contains `nil` as its second value. For example, Kimi interprets `(list 1 2 3)` as `(1, (2, (3, nil)))`.
+* `prepend` adds an argument to the front of a list, and `list` is essentially a shorthand for multiple `prepend` calls: `(list 1) = (prepend 1 nil) => (1, nil)`, `(list 1 2) = (prepend 1 (prepend 2 nil)) => (1, (2, nil))`
 * `first` returns the first item in the list: `(first (list 1 2)) => 1`
-* `rest` allow you to access the remainder of the list, i.e. the second item of the tuple: `(rest (list 1 2)) => (2, None)`
+* `rest` allow you to access the remainder of the list, i.e. the second item of the tuple: `(rest (list 1 2)) => (2, nil)`
 
 ## Using `do`
 * To imperatively execute several commands one after the other, wrap them in `(do ...)`. Kimi will evaluate each expression in turn, and return the result of the last expression evaluated. For example, the following programs both give `7`:

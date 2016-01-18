@@ -75,19 +75,23 @@ $ python3 kimi.py samples/sample.kimi
 
 ## Using `do`
 * To imperatively execute several commands one after the other, wrap them in `(do ...)`. Kimi will evaluate each expression in turn, and return the result of the last expression evaluated. For example, the following programs both give `7`:
+
     ~~~
     (do (define x 3) (define y 4) (+ x y))
     ~~~
+    
     ~~~
     (do (+ 1 2) (+ 3 4))
     ~~~
 * Each `do` block has its own scope; names defined in one `do` block are not accessible from parent or sibling blocks. For example, the following programs will throw errors when trying to access `x`:
+    
     ~~~
     (do
         (do (define x 3))
         (+ 1 x)
     )
     ~~~
+
     ~~~
     (do
         (do (define x 3))
@@ -95,10 +99,13 @@ $ python3 kimi.py samples/sample.kimi
     )
     ~~~
 * Kimi does not know how to imperatively evaluate multiple expressions if they are not wrapped in a `do` block. In this case, Kimi will evaluate the first command it finds and ignore the rest. For example, we saw above that this program evaluates to `7`:
+
     ~~~
     (do (+ 1 2) (+ 3 4))
     ~~~
+    
     But this program evaluates to `3`:
+    
     ~~~
     (+ 1 2) (+ 3 4)
     ~~~
